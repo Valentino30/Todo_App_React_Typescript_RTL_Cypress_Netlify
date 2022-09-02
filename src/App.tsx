@@ -6,7 +6,7 @@ import {
   MutableRefObject,
 } from "react";
 
-type Todo = { id: number; name: string };
+type Todo = { id: number; name: string; isComplete: boolean };
 
 function App() {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -15,7 +15,11 @@ function App() {
   const input = useRef() as MutableRefObject<HTMLInputElement>;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setNewTodo({ id: todos.length + 1, name: e.target.value });
+    setNewTodo({
+      id: todos.length + 1,
+      name: e.target.value,
+      isComplete: false,
+    });
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -28,6 +32,14 @@ function App() {
 
   const handleDelete = (todoId: number) => {
     setTodos((todos) => todos.filter((todo) => todo.id !== todoId));
+  };
+
+  const handleComplete = (todoId: number) => {
+    setTodos((todos) =>
+      todos.map((todo) =>
+        todo.id === todoId ? { ...todo, isComplete: !todo.isComplete } : todo
+      )
+    );
   };
 
   return (
@@ -45,7 +57,12 @@ function App() {
       <ul>
         {todos.map((todo) => (
           <li key={todo.id}>
-            {todo.name}
+            <span
+              style={{ textDecoration: todo.isComplete ? "line-through" : "" }}
+            >
+              {todo.name}
+            </span>
+            <button onClick={(_) => handleComplete(todo.id)}>Complete</button>
             <button onClick={(_) => handleDelete(todo.id)}>Delete</button>
           </li>
         ))}
