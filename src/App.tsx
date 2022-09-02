@@ -26,6 +26,10 @@ function App() {
     }
   };
 
+  const handleDelete = (todoId: number) => {
+    setTodos((todos) => todos.filter((todo) => todo.id !== todoId));
+  };
+
   return (
     <div>
       <h1>Todo App</h1>
@@ -40,7 +44,10 @@ function App() {
       </form>
       <ul>
         {todos.map((todo) => (
-          <li key={todo.id}>{todo.name}</li>
+          <li key={todo.id}>
+            {todo.name}
+            <button onClick={(_) => handleDelete(todo.id)}>Delete</button>
+          </li>
         ))}
       </ul>
     </div>
