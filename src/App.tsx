@@ -6,40 +6,25 @@ import {
   MutableRefObject,
 } from "react";
 
-type Todo = { id: number; name: string; isComplete: boolean };
+import { useTodo } from "./hooks/todo";
 
 function App() {
-  const [todos, setTodos] = useState<Todo[]>([]);
-  const [newTodo, setNewTodo] = useState<Todo>();
+  const [todoName, setTodoName] = useState("");
+  const { todos, addTodo, toggleTodo, deleteTodo } = useTodo();
 
   const input = useRef() as MutableRefObject<HTMLInputElement>;
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setNewTodo({
-      id: todos.length + 1,
-      name: e.target.value,
-      isComplete: false,
-    });
-  };
+  const handleDelete = (todoId: string) => deleteTodo(todoId);
+  const handleComplete = (todoId: string) => toggleTodo(todoId);
+  const handleChange = ({ target: { value } }: ChangeEvent<HTMLInputElement>) =>
+    setTodoName(value);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (newTodo) {
-      setTodos((todos) => [newTodo, ...todos]);
+    if (todoName) {
+      addTodo(todoName);
       input.current.value = "";
     }
-  };
-
-  const handleDelete = (todoId: number) => {
-    setTodos((todos) => todos.filter((todo) => todo.id !== todoId));
-  };
-
-  const handleComplete = (todoId: number) => {
-    setTodos((todos) =>
-      todos.map((todo) =>
-        todo.id === todoId ? { ...todo, isComplete: !todo.isComplete } : todo
-      )
-    );
   };
 
   return (
