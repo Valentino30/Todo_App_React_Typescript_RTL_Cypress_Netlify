@@ -1,4 +1,3 @@
-import { nanoid } from "nanoid";
 import { createContext, useContext, useState } from "react";
 
 import { TodoContextType, TodoProviderType, TodoType } from "../types/todo";
@@ -16,7 +15,7 @@ export const TodoProvider = ({ children }: TodoProviderType) => {
     setTodos([
       ...todos,
       {
-        id: nanoid(),
+        id: `${todos.length + 1}`,
         name,
         isComplete: false,
       },
