@@ -1,24 +1,57 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {
+  useRef,
+  useState,
+  FormEvent,
+  ChangeEvent,
+  MutableRefObject,
+} from "react";
+
+import { useTodo } from "./hooks/todo";
 
 function App() {
+  const [todoName, setTodoName] = useState("");
+  const { todos, addTodo, toggleTodo, deleteTodo } = useTodo();
+
+  const input = useRef() as MutableRefObject<HTMLInputElement>;
+
+  const handleDelete = (todoId: string) => deleteTodo(todoId);
+  const handleComplete = (todoId: string) => toggleTodo(todoId);
+  const handleChange = ({ target: { value } }: ChangeEvent<HTMLInputElement>) =>
+    setTodoName(value);
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (todoName) {
+      addTodo(todoName);
+      input.current.value = "";
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Todo App</h1>
+      <form onSubmit={handleSubmit}>
+        <input
+          onChange={handleChange}
+          placeholder="Add Todo"
+          ref={input}
+          type="text"
+          name="todo"
+        />
+      </form>
+      <ul>
+        {todos.map((todo) => (
+          <li key={todo.id}>
+            <span
+              style={{ textDecoration: todo.isComplete ? "line-through" : "" }}
+            >
+              {todo.name}
+            </span>
+            <button onClick={(_) => handleComplete(todo.id)}>Complete</button>
+            <button onClick={(_) => handleDelete(todo.id)}>Delete</button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
