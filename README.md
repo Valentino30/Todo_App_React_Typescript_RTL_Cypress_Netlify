@@ -12,6 +12,6 @@ This small todo app was bootstrapped following this [React tutorial](https://you
 ## Stack
 
 - [Create React App](https://github.com/facebook/create-react-app)
-- [React Testing Library](https://github.com/facebook/create-react-app)
-- [Cypress](https://github.com/facebook/create-react-app)
-- [Netlify](https://github.com/facebook/create-react-app)
+- [React Testing Library](https://testing-library.com/)
+- [Cypress](https://docs.cypress.io/)
+- [Netlify](https://www.netlify.com/)
