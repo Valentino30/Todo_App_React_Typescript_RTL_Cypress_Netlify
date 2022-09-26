@@ -29,7 +29,7 @@ function App() {
 
   return (
     <div>
-      <h1>Todo App</h1>
+      <h1>My Todos</h1>
       <form onSubmit={handleSubmit}>
         <input
           onChange={handleChange}
