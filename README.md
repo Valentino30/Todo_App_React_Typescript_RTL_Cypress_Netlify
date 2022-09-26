@@ -1,6 +1,6 @@
 # Todo App
 
-This small todo app was bootstrapped following this [React tutorial](https://youtu.be/RgxyPMJmlRA) by Techbase. It is nothing more than a demo to showcase a basic usage of react, react testing library, cypress and netlify.
+This small todo app was bootstrapped following this [React tutorial](https://youtu.be/RgxyPMJmlRA) by Techbase. It is nothing more than a demo to showcase a basic usage of react, react testing library, cypress and netlify. The app can be found live on [Netlify](https://remarkable-kangaroo-24b721.netlify.app/).
 
 ## Scripts
 
